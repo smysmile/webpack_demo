@@ -12,6 +12,27 @@ module.exports = {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js'
   },
+  devServer: {
+    // open: true,
+    proxy: {
+      '/api': {
+        target: 'http://192.168.210.10:3000',
+        changeOrigin: true, // 设置同源  默认false，是否需要改变原始主机头为目标URL,
+        ws: true, // 是否代理websockets
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+    },
+  },
+  // devServer: {
+  //   proxy: { //代理
+  //     '/api': {
+  //       target: 'http://192.168.210.10:3000',
+  //       pathRewrite: { '/api': '' }
+  //     }
+  //   }
+  // },
   plugins: [htmlPlugin, new vueLoaderPlugin()],
   module: {
     rules: [
